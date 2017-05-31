@@ -106,11 +106,11 @@
                 interest1 = parseFloat(document.getElementById("field2").value),
                 remeaning1 = parseFloat(document.getElementById("field3").value),
                 k1 = 1 + interest1 / 1200,
-                mpay1 = loan * Math.pow(k1, remeaning1 * 12 - 1) / (Math.pow(k1, remeaning1 * 12) - 1) *(k1 - 1),
+                mpay1 = loan * Math.pow(k1, remeaning1 * 12) / (Math.pow(k1, remeaning1 * 12) - 1) *(k1 - 1),
                 interest2 = parseFloat(document.getElementById("field4").value),
                 remeaning2 = parseFloat(document.getElementById("field5").value),
                 k2 = 1 + interest2 / 1200,
-                mpay2 = loan * Math.pow(k2, remeaning2 * 12 - 1) / (Math.pow(k2, remeaning2 * 12) - 1) *(k2 - 1);
+                mpay2 = loan * Math.pow(k2, remeaning2 * 12) / (Math.pow(k2, remeaning2 * 12) - 1) *(k2 - 1);
             document.getElementById("total1").innerHTML = "$" + (mpay1 * 12 * remeaning1 - loan).toFixed();
             document.getElementById("monthly1").innerHTML = "$" + mpay1.toFixed();
             document.getElementById("interest1").innerHTML = interest1 + "%";
