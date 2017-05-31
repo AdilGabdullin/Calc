@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Student loan refinancing calculator</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  </head>
+  <body>
+    <div class="container">
+      <div class="row">
+        <div class="col-md-3">
+          <div class="panel panel-default">
+            <div class="panel-body">
+              Step 1: Current loan info
+            </div>
+          </div>
+
+          <span>Student loan balance</span>
+          <div class="input-group">
+            <span class="input-group-addon" id="basic-addon1">$</span>
+            <input id="field1" type="text" class="form-control" value="35000" aria-describedby="basic-addon1">
+          </div>
+
+          <span>Average interest rate</span>
+          <div class="input-group">
+            <input id="field2" type="text" class="form-control" value="5.7" aria-describedby="basic-addon2">
+            <span class="input-group-addon" id="basic-addon2">%</span>
+          </div>
+
+          <span>Remaining loan term (yr)</span>
+          <div class="input-group">
+            <input id="field3" type="text" class="form-control" value="10" aria-describedby="basic-addon2">
+            <span class="input-group-addon" id="basic-addon2">yr</span>
+          </div>
+          <p></p>
+          <div class="panel panel-default">
+            <div class="panel-body">
+              Step 2: New loan info
+            </div>
+          </div>
+
+          <span>New interest rate</span>
+          <div class="input-group">
+            <input id="field4" type="text" class="form-control" value="4.99" aria-describedby="basic-addon2">
+            <span class="input-group-addon" id="basic-addon2">%</span>
+          </div>
+
+          <span>New loan term (years)</span>
+          <div class="input-group">
+            <input id="field5" type="text" class="form-control" value="10" aria-describedby="basic-addon2">
+            <span class="input-group-addon" id="basic-addon2">yr</span>
+          </div>
+        </div>
+
+        <div class="col-md-9">
+          <table class="table">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>ORIGINAL LOAN</th>
+                    <th>NEW LOAN</th>
+                    <th>SAVINGS</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Total interest paid</td>
+                    <td id="total1">$10,998</td>
+                    <td id="total2">$9,527</td>
+                    <td id="savings">+ $1,471</td>
+                </tr>
+                <tr>
+                    <td>Monthly payment</td>
+                    <td id="monthly1">$383</td>
+                    <td id="monthly2">$371</td>
+                    <td id="m-savings">+$12/mo</td>
+                </tr>
+                <tr>
+                    <td>Interest rate</td>
+                    <td id="interest1">5.7%</td>
+                    <td id="interest2">4.99%</td>
+                    <td id="interest-delta">+ 0.71%</td>
+                </tr>
+                <tr>
+                    <td>Term in years</td>
+                    <td id="term1">10yr</td>
+                    <td id="term2">10yr</td>
+                    <td>-</td>
+                </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      var f1 = document.getElementById("field1"),
+          f2 = document.getElementById("field2"),
+          f3 = document.getElementById("field3"),
+          f4 = document.getElementById("field4"),
+          f5 = document.getElementById("field5"),
+          func = function() {
+            var loan = parseFloat(document.getElementById("field1").value),
+                interest1 = parseFloat(document.getElementById("field2").value),
+                remeaning1 = parseFloat(document.getElementById("field3").value),
+                k1 = 1 + interest1 / 1200,
+                mpay1 = loan * Math.pow(k1, remeaning1 * 12 - 1) / (Math.pow(k1, remeaning1 * 12) - 1) *(k1 - 1),
+                interest2 = parseFloat(document.getElementById("field4").value),
+                remeaning2 = parseFloat(document.getElementById("field5").value),
+                k2 = 1 + interest2 / 1200,
+                mpay2 = loan * Math.pow(k2, remeaning2 * 12 - 1) / (Math.pow(k2, remeaning2 * 12) - 1) *(k2 - 1);
+            document.getElementById("total1").innerHTML = "$" + (mpay1 * 12 * remeaning1 - loan).toFixed();
+            document.getElementById("monthly1").innerHTML = "$" + mpay1.toFixed();
+            document.getElementById("interest1").innerHTML = interest1 + "%";
+            document.getElementById("term1").innerHTML = remeaning1 +"yr";
+            document.getElementById("total2").innerHTML = "$" + (mpay2 * 12 * remeaning2 - loan).toFixed();
+            document.getElementById("monthly2").innerHTML = "$" + mpay2.toFixed();
+            document.getElementById("interest2").innerHTML = interest2 + "%";
+            document.getElementById("term2").innerHTML = remeaning2 +"yr";
+            document.getElementById("savings").innerHTML = "+ $" + (mpay1 * 12 * remeaning1 - mpay2 * 12 * remeaning2).toFixed();
+            document.getElementById("m-savings").innerHTML = "+ $" + (mpay1 - mpay2).toFixed() + "/mo";
+            document.getElementById("interest-delta").innerHTML = "+ " + (interest1 - interest2).toFixed(2) + "%";
+          };
+      f1.oninput = func;
+      f2.oninput = func;
+      f3.oninput = func;
+      f4.oninput = func;
+      f5.oninput = func;
+      func();
+    </script>
+  </body>
+</html>
